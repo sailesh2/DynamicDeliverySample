@@ -2,6 +2,7 @@ package su.dynamicdeliverysample;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Handler;
@@ -87,6 +88,7 @@ class DynamicFeatureLoader {
         mSuccessListener = new OnSuccessListener<Integer>() {
             @Override
             public void onSuccess(Integer session) {
+                Logger.logD("onsuccess + session - " + session.toString());
                 mCurrentInstallSession = session;
             }
         };
@@ -115,6 +117,7 @@ class DynamicFeatureLoader {
 
             @Override
             public void onStateUpdate(SplitInstallSessionState state) {
+                Logger.logD("state update - "+state.toString());
                 if (state.status() == SplitInstallSessionStatus.FAILED
                         && state.errorCode() == SplitInstallErrorCode.SERVICE_DIED) {
                     // Retry the request.
@@ -135,6 +138,9 @@ class DynamicFeatureLoader {
                         case SplitInstallSessionStatus.FAILED:
                             Logger.logD("Failed");
                             destroy();
+                            break;
+                        case SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION:
+                            askUserPermission(state.resolutionIntent().getIntentSender());
                             break;
 
                     }
@@ -205,8 +211,18 @@ class DynamicFeatureLoader {
                                             .build();
     }
 
+    private void askUserPermission(IntentSender intentSender){
+        try {
+            mContext.startIntentSender(intentSender, null, 0, 0, 0);
+        } catch (IntentSender.SendIntentException e) {
+            Logger.logD("Could not start ask user intent" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void destroy(){
         unRegisterStateListener();
         mProgressCallback.onComplete();;
     }
 }
+

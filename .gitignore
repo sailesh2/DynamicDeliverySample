@@ -1,2 +1,5 @@
 /DynamicDeliverySample.iml
 /build
+/.idea
+/*.lock
+/.gradle

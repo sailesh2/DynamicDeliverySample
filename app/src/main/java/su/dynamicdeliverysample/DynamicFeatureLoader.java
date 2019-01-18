@@ -222,7 +222,7 @@ class DynamicFeatureLoader {
 
     private void destroy(){
         unRegisterStateListener();
-        mProgressCallback.onComplete();;
+        mProgressCallback.onComplete();
     }
 }
 

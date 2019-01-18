@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">DynamicImageDelivery</string>
-    <string name="title_dynamicimage">dynamicimage</string>
+    <string name="app_name">Image Delivery App</string>
+    <string name="title_dynamicimage">Dynamic Image</string>
 </resources>

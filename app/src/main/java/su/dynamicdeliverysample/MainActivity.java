@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupDownloadAlert(){
         mDynamicFeatureDownloadAlert = new AlertDialog.Builder(this);
-        mDynamicFeatureDownloadAlert.setTitle("Download dynamic module might increase app size, please allow");
+        mDynamicFeatureDownloadAlert.setTitle("Downloading dynamic module might increase app size, please allow");
         mDynamicFeatureDownloadAlert.setPositiveButton("OK", mPositiveAlertClickListener);
         mDynamicFeatureDownloadAlert.setNegativeButton("CANCEL", mNegativeAlertClickListener);
     }
